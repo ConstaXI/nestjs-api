@@ -5,6 +5,7 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { UsersModule } from './users/users.module';
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
+    RolesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

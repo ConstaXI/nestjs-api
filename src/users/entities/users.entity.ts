@@ -1,5 +1,12 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Role } from 'src/roles/entities/role.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -23,4 +30,9 @@ export class User {
   @Column()
   @Field()
   password: string;
+
+  @OneToOne(() => Role, (role) => role.user)
+  @JoinColumn()
+  @Field(() => Role)
+  role: Role;
 }

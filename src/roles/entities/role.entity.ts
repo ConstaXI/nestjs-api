@@ -1,10 +1,15 @@
 import { ObjectType, Field } from '@nestjs/graphql';
-import { Column, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
+import { v4 } from 'uuid';
 import { User } from '../../users/entities/users.entity';
-
+@Entity()
 @ObjectType()
 export class Role {
-  @PrimaryGeneratedColumn('uuid')
+  constructor() {
+    this.id = v4();
+  }
+
+  @PrimaryColumn()
   @Field()
   id: string;
 

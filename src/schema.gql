@@ -8,15 +8,32 @@ type User {
   surname: String!
   email: String!
   password: String!
+  role: Role!
+}
+
+type Role {
+  id: String!
+  type: String!
+  user: User!
 }
 
 type Query {
   getUser(id: String!): User!
   getUsers: [User!]!
+  roles: [Role!]!
+  role(id: Int!): Role!
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
+  createUser(createRoleInput: CreateRoleInput!, createUserInput: CreateUserInput!): User!
+  deleteUser(id: String!): User!
+  createRole(createRoleInput: CreateRoleInput!): Role!
+  updateRole(updateRoleInput: UpdateRoleInput!): Role!
+  removeRole(id: Int!): Role!
+}
+
+input CreateRoleInput {
+  type: String!
 }
 
 input CreateUserInput {
@@ -24,4 +41,9 @@ input CreateUserInput {
   surname: String!
   email: String!
   password: String!
+}
+
+input UpdateRoleInput {
+  type: String
+  id: Int!
 }

@@ -9,11 +9,11 @@ import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
-    UsersModule,
     TypeOrmModule.forRoot(),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
+    UsersModule,
     RolesModule,
   ],
   controllers: [AppController],

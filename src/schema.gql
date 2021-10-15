@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Role {
+  id: String!
+  type: String!
+  user: User!
+}
+
 type User {
   id: String!
   name: String!
@@ -9,12 +15,6 @@ type User {
   email: String!
   password: String!
   role: Role!
-}
-
-type Role {
-  id: String!
-  type: String!
-  user: User!
 }
 
 type Query {

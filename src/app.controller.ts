@@ -13,7 +13,7 @@ export class AppController {
   }
 
   @Get('protected')
-  hello(): any {
-    return 'hello';
+  hello(@Request() request: any): any {
+    return request.user;
   }
 }

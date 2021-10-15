@@ -34,6 +34,7 @@ export class UsersService {
   }
 
   findOne(email: string): Promise<User> {
+    console.log(email);
     return this.usersRepository.findOneOrFail({ where: { email: email } });
   }
 

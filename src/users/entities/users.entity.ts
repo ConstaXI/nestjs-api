@@ -6,8 +6,10 @@ import {
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm';
 @Entity()
+@Unique(['email'])
 @ObjectType()
 export class User {
   @PrimaryGeneratedColumn('uuid')
@@ -22,7 +24,7 @@ export class User {
   @Field()
   surname: string;
 
-  @Column({ unique: true })
+  @Column()
   @Field()
   email: string;
 

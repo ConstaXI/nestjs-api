@@ -30,8 +30,8 @@ export class UsersService {
     return this.usersRepository.save(newUser);
   }
 
-  findOne(id: string): Promise<User> {
-    return this.usersRepository.findOneOrFail(id);
+  findOne(email: string): Promise<User> {
+    return this.usersRepository.findOneOrFail(email);
   }
 
   deleteUser(id: string): void {

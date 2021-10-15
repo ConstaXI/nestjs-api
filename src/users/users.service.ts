@@ -4,7 +4,7 @@ import { CreateRoleInput } from 'src/roles/dto/create-role.input';
 import { Repository } from 'typeorm';
 import { CreateUserInput } from './dto/create-user.input';
 import { User } from './entities/users.entity';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { RolesService } from '../roles/roles.service';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class UsersService {
     createUserInput: CreateUserInput,
     createRoleInput: CreateRoleInput,
   ): Promise<User> {
-    await bcrypt.hash(createUserInput.password, 8);
+    createUserInput.password = await bcrypt.hash(createUserInput.password, 8);
 
     const newUser = this.usersRepository.create(createUserInput);
 
@@ -34,7 +34,7 @@ export class UsersService {
   }
 
   findOne(email: string): Promise<User> {
-    return this.usersRepository.findOneOrFail(email);
+    return this.usersRepository.findOneOrFail({ where: { email: email } });
   }
 
   deleteUser(id: string): void {

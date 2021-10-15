@@ -20,16 +20,11 @@ type Role {
 type Query {
   getUser(id: String!): User!
   getUsers: [User!]!
-  roles: [Role!]!
-  role(id: Int!): Role!
 }
 
 type Mutation {
   createUser(createRoleInput: CreateRoleInput!, createUserInput: CreateUserInput!): User!
   deleteUser(id: String!): User!
-  createRole(createRoleInput: CreateRoleInput!): Role!
-  updateRole(updateRoleInput: UpdateRoleInput!): Role!
-  removeRole(id: Int!): Role!
 }
 
 input CreateRoleInput {
@@ -41,9 +36,4 @@ input CreateUserInput {
   surname: String!
   email: String!
   password: String!
-}
-
-input UpdateRoleInput {
-  type: String
-  id: Int!
 }

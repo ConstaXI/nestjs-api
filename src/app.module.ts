@@ -15,6 +15,7 @@ import { BetsModule } from './bets/bets.module';
     TypeOrmModule.forRoot(),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      context: ({ req }) => ({ req }),
     }),
     UsersModule,
     RolesModule,

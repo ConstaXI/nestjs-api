@@ -25,6 +25,7 @@ type AuthType {
 type Query {
   getUser(email: String!): User!
   getUsers: [User!]!
+  protected: User!
 }
 
 type Mutation {

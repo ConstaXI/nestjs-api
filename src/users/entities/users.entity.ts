@@ -1,13 +1,11 @@
-import { Field, ObjectType } from '@nestjs/graphql';
-import { Role } from 'src/roles/entities/role.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-  Unique,
-} from 'typeorm';
+import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { UserRole } from './user.interface';
+
+registerEnumType(UserRole, {
+  name: 'UserRole',
+});
+
 @Entity()
 @Unique(['email'])
 @ObjectType()
@@ -32,10 +30,7 @@ export class User {
   @Field()
   password: string;
 
-  @OneToOne(() => Role, (role) => role.user, {
-    cascade: true,
-  })
-  @JoinColumn()
-  @Field(() => Role)
-  role: Role;
+  @Column({ type: 'enum', enum: UserRole, default: UserRole.PLAYER })
+  @Field(() => UserRole)
+  role: UserRole;
 }

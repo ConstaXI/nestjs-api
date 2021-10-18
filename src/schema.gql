@@ -2,19 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Role {
-  id: String!
-  type: String!
-  user: User!
-}
-
 type User {
   id: String!
   name: String!
   surname: String!
   email: String!
   password: String!
-  role: Role!
+  role: UserRole!
+}
+
+enum UserRole {
+  ADMIN
+  PLAYER
 }
 
 type AuthType {
@@ -26,16 +25,13 @@ type Query {
   getUser(email: String!): User!
   getUsers: [User!]!
   protected: User!
+  isAdmin: User!
 }
 
 type Mutation {
-  createUser(createRoleInput: CreateRoleInput!, createUserInput: CreateUserInput!): User!
+  createUser(createUserInput: CreateUserInput!): User!
   deleteUser(id: String!): User!
   login(loginInput: LoginInput!): AuthType!
-}
-
-input CreateRoleInput {
-  type: String!
 }
 
 input CreateUserInput {
@@ -43,6 +39,7 @@ input CreateUserInput {
   surname: String!
   email: String!
   password: String!
+  role: String!
 }
 
 input LoginInput {

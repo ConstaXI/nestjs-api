@@ -5,7 +5,6 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { RolesModule } from './roles/roles.module';
 import { AuthModule } from './auth/auth.module';
 import { GamesModule } from './games/games.module';
 import { BetsModule } from './bets/bets.module';
@@ -18,7 +17,6 @@ import { BetsModule } from './bets/bets.module';
       context: ({ req }) => ({ req }),
     }),
     UsersModule,
-    RolesModule,
     AuthModule,
     GamesModule,
     BetsModule,

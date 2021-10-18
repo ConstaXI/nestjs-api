@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { JtwStrategy } from './jwt.strategy';
 import { LocalStrategy } from './local.stategy';
 import { SessionSerializer } from './session.serializer';
+import { AuthResolver } from './auth.resolver';
 
 @Module({
   imports: [
@@ -16,7 +17,13 @@ import { SessionSerializer } from './session.serializer';
       signOptions: { expiresIn: '1h' },
     }),
   ],
-  providers: [AuthService, LocalStrategy, SessionSerializer, JtwStrategy],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    SessionSerializer,
+    JtwStrategy,
+    AuthResolver,
+  ],
   exports: [AuthService],
 })
 export class AuthModule {}

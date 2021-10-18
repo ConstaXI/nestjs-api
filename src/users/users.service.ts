@@ -22,7 +22,7 @@ export class UsersService {
     createUserInput: CreateUserInput,
     createRoleInput: CreateRoleInput,
   ): Promise<User> {
-    createUserInput.password = await bcrypt.hash(createUserInput.password, 8);
+    createUserInput.password = await bcrypt.hash(createUserInput.password, 10);
 
     const newUser = this.usersRepository.create(createUserInput);
 

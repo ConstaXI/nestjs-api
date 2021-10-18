@@ -33,9 +33,12 @@ export class UsersService {
     return this.usersRepository.save(newUser);
   }
 
-  findOne(email: string): Promise<User> {
-    console.log(email);
+  findOneByEmail(email: string): Promise<User> {
     return this.usersRepository.findOneOrFail({ where: { email: email } });
+  }
+
+  findOne(id: string): Promise<User> {
+    return this.usersRepository.findOneOrFail(id);
   }
 
   deleteUser(id: string): void {

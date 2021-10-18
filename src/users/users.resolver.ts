@@ -10,7 +10,7 @@ export class UsersResolver {
 
   @Query(() => User)
   getUser(@Args('email', { type: () => String }) email: string): Promise<User> {
-    return this.usersService.findOne(email);
+    return this.usersService.findOneByEmail(email);
   }
 
   @Query(() => [User])

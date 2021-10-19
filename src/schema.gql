@@ -21,17 +21,29 @@ type AuthType {
   token: String!
 }
 
+type Game {
+  id: String!
+  type: String!
+  description: String!
+  range: Int!
+  price: Float!
+  max_numbers: Int!
+  color: String!
+}
+
 type Query {
   getUser(email: String!): User!
   getUsers: [User!]!
   protected: User!
   isAdmin: User!
+  getGames: [Game!]!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   deleteUser(id: String!): User!
   login(loginInput: LoginInput!): AuthType!
+  createGame(createGameInput: CreateGameInput!): Game!
 }
 
 input CreateUserInput {
@@ -45,4 +57,13 @@ input CreateUserInput {
 input LoginInput {
   email: String!
   password: String!
+}
+
+input CreateGameInput {
+  type: String!
+  description: String!
+  range: Int!
+  price: Float!
+  max_numbers: Int!
+  color: String!
 }

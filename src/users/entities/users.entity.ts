@@ -30,7 +30,7 @@ export class User {
   @Field()
   password: string;
 
-  @Column({ type: 'enum', enum: UserRole })
+  @Column({ type: 'enum', enum: UserRole, default: UserRole.PLAYER })
   @Field(() => UserRole)
   role: UserRole;
 }

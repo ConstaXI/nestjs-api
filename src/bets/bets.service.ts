@@ -15,14 +15,12 @@ export class BetsService {
     game: Game,
     { numbers }: CreateBetInput,
   ): Promise<Bet> {
-    const bet = this.betsRepository.create({ numbers });
+    const bet = this.betsRepository.create({
+      numbers: numbers,
+      gameId: game.id,
+      userId: user.id,
+    });
 
-    game.bets = [bet];
-    user.bets = [bet];
-
-    await user.save();
-    await game.save();
-
-    return bet;
+    return bet.save();
   }
 }

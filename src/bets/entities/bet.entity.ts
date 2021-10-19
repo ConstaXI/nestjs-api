@@ -20,6 +20,12 @@ export class Bet extends BaseEntity {
   @Column({ type: 'varchar' })
   numbers: number[];
 
+  @Column()
+  userId: string;
+
+  @Column()
+  gameId: string;
+
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.bets)
   user: User;

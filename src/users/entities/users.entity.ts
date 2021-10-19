@@ -1,5 +1,11 @@
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
 import { UserRole } from './user.interface';
 
 registerEnumType(UserRole, {
@@ -9,7 +15,7 @@ registerEnumType(UserRole, {
 @Entity()
 @Unique(['email'])
 @ObjectType()
-export class User {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Field()
   id: string;

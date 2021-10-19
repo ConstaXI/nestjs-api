@@ -1,5 +1,9 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { CurrentUser } from 'src/auth/decorators/get-current-user';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateUserInput } from './dto/create-user.input';
+import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/users.entity';
 import { UsersService } from './users.service';
 
@@ -24,8 +28,18 @@ export class UsersResolver {
     return this.usersService.createUser(createUserInput);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => User)
-  deleteUser(@Args('id', { type: () => String }) id: string): void {
-    this.usersService.deleteUser(id);
+  async updateUser(
+    @CurrentUser() user: User,
+    @Args('updateUserInput') updateUserInput: UpdateUserInput,
+  ): Promise<User> {
+    return await this.usersService.updateUser(user, updateUserInput);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Mutation(() => User)
+  async deleteUser(@CurrentUser() user: User): Promise<User> {
+    return await this.usersService.deleteUser(user);
   }
 }

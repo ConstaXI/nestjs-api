@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateUserInput } from './dto/create-user.input';
 import { User } from './entities/users.entity';
 import * as bcrypt from 'bcrypt';
+import { UpdateUserInput } from './dto/update-user.input';
 
 @Injectable()
 export class UsersService {
@@ -23,6 +24,15 @@ export class UsersService {
     return this.usersRepository.save(newUser);
   }
 
+  async updateUser(
+    user: User,
+    updateUserInput: UpdateUserInput,
+  ): Promise<User> {
+    this.usersRepository.update(user, { ...updateUserInput });
+
+    return user;
+  }
+
   findOneByEmail(email: string): Promise<User> {
     return this.usersRepository.findOneOrFail({ where: { email: email } });
   }
@@ -31,7 +41,7 @@ export class UsersService {
     return this.usersRepository.findOneOrFail(id);
   }
 
-  deleteUser(id: string): void {
-    this.usersRepository.delete(id);
+  async deleteUser(user: User): Promise<User> {
+    return user.remove();
   }
 }

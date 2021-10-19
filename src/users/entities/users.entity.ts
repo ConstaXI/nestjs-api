@@ -1,8 +1,11 @@
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Bet } from 'src/bets/entities/bet.entity';
 import {
   BaseEntity,
   Column,
   Entity,
+  JoinColumn,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
@@ -39,4 +42,8 @@ export class User extends BaseEntity {
   @Column({ type: 'enum', enum: UserRole, default: UserRole.PLAYER })
   @Field(() => UserRole)
   role: UserRole;
+
+  @OneToMany(() => Bet, (bet) => bet.user, { cascade: true })
+  @JoinColumn()
+  bets: Bet[];
 }

@@ -1,10 +1,17 @@
 import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Bet } from '../../bets/entities/bet.entity';
 
 @Entity()
-@Unique(['type'])
 @ObjectType()
-export class Game {
+export class Game extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Field()
   id: string;
@@ -32,4 +39,8 @@ export class Game {
   @Column()
   @Field()
   color: string;
+
+  @OneToMany(() => Bet, (bet) => bet.game, { cascade: true })
+  @JoinColumn()
+  bets: Bet[];
 }

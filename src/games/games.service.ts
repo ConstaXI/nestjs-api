@@ -14,6 +14,10 @@ export class GamesService {
     return this.gamesRepository.find();
   }
 
+  findOne(id: string): Promise<Game> {
+    return this.gamesRepository.findOneOrFail(id);
+  }
+
   async createGame(createGameInput: CreateGameInput): Promise<Game> {
     const game = this.gamesRepository.create(createGameInput);
 

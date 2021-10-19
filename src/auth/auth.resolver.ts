@@ -7,6 +7,7 @@ import { UseGuards } from '@nestjs/common';
 import { User } from 'src/users/entities/users.entity';
 import { CurrentUser } from './decorators/get-current-user';
 import { hasRoles } from './decorators/has-roles';
+import { RolesGuard } from './guards/roles.guard';
 
 @Resolver()
 export class AuthResolver {
@@ -26,7 +27,7 @@ export class AuthResolver {
   }
 
   @hasRoles('admin')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Query(() => User)
   async isAdmin(@CurrentUser() user: User): Promise<User> {
     return user;

@@ -5,23 +5,19 @@ import {
   Inject,
   forwardRef,
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
+import { GqlExecutionContext } from '@nestjs/graphql';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(
-    private reflector: Reflector,
     @Inject(forwardRef(() => UsersService)) private usersService: UsersService,
   ) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const roles = this.reflector.get<string[]>('roles', context.getHandler());
-    if (!roles) {
-      return true;
-    }
-    const request = context.switchToHttp().getRequest();
-    const user = request.user;
-    return true;
+    const ctx = GqlExecutionContext.create(context);
+    const user = ctx.getContext().req.user;
+
+    return user.role === 'admin';
   }
 }

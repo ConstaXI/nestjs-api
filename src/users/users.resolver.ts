@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CurrentUser } from 'src/auth/decorators/get-current-user';
+import { HasRoles } from 'src/auth/decorators/has-roles';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
@@ -22,10 +23,19 @@ export class UsersResolver {
   }
 
   @Mutation(() => User)
-  createUser(
+  async createUser(
     @Args('createUserInput') createUserInput: CreateUserInput,
   ): Promise<User> {
-    return this.usersService.createUser(createUserInput);
+    return await this.usersService.createUser(createUserInput);
+  }
+
+  @HasRoles('admin')
+  @UseGuards(JwtAuthGuard)
+  @Mutation(() => User)
+  async createAdmin(
+    @Args('createUserInput') createUserInput: CreateUserInput,
+  ): Promise<User> {
+    return await this.usersService.createAdmin(createUserInput);
   }
 
   @UseGuards(JwtAuthGuard)

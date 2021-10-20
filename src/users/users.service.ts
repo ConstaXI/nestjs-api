@@ -5,6 +5,7 @@ import { CreateUserInput } from './dto/create-user.input';
 import { User } from './entities/users.entity';
 import * as bcrypt from 'bcrypt';
 import { UpdateUserInput } from './dto/update-user.input';
+import { UserRole } from './entities/user.interface';
 
 @Injectable()
 export class UsersService {
@@ -19,9 +20,20 @@ export class UsersService {
   async createUser(createUserInput: CreateUserInput): Promise<User> {
     createUserInput.password = await bcrypt.hash(createUserInput.password, 10);
 
-    const newUser = this.usersRepository.create(createUserInput);
+    const user = this.usersRepository.create(createUserInput);
 
-    return this.usersRepository.save(newUser);
+    return this.usersRepository.save(user);
+  }
+
+  async createAdmin(createUserInput: CreateUserInput): Promise<User> {
+    createUserInput.password = await bcrypt.hash(createUserInput.password, 10);
+
+    const admin = this.usersRepository.create({
+      ...createUserInput,
+      role: UserRole.ADMIN,
+    });
+
+    return this.usersRepository.save(admin);
   }
 
   async updateUser(

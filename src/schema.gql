@@ -41,14 +41,13 @@ type AuthType {
 type Query {
   getUser(email: String!): User!
   getUsers: [User!]!
-  protected: User!
-  isAdmin: User!
   getGames: [Game!]!
   getBets: [Bet!]!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
+  createAdmin(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   deleteUser: User!
   login(loginInput: LoginInput!): AuthType!
@@ -63,7 +62,6 @@ input CreateUserInput {
   surname: String!
   email: String!
   password: String!
-  role: String!
 }
 
 input UpdateUserInput {

@@ -28,9 +28,7 @@ export class UsersService {
     user: User,
     updateUserInput: UpdateUserInput,
   ): Promise<User> {
-    this.usersRepository.update(user, { ...updateUserInput });
-
-    return user;
+    return this.usersRepository.save({ id: user.id, ...updateUserInput });
   }
 
   findOneByEmail(email: string): Promise<User> {

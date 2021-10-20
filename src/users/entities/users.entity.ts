@@ -39,7 +39,7 @@ export class User extends BaseEntity {
   @Field()
   password: string;
 
-  @Column({ type: 'enum', enum: UserRole, default: UserRole.PLAYER })
+  @Column({ type: 'enum', enum: UserRole })
   @Field(() => UserRole)
   role: UserRole;
 

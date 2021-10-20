@@ -7,6 +7,7 @@ import { CreateGameInput } from './dto/create-game.input';
 import { UpdateGameInput } from './dto/update-game.input';
 import { Game } from './entities/game.entity';
 import { GamesService } from './games.service';
+import { UserRole } from '../users/entities/user.interface';
 
 @Resolver()
 export class GamesResolver {
@@ -17,7 +18,7 @@ export class GamesResolver {
     return await this.gamesService.findAll();
   }
 
-  @HasRoles('admin')
+  @HasRoles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Mutation(() => Game)
   async createGame(
@@ -26,18 +27,17 @@ export class GamesResolver {
     return await this.gamesService.createGame(createGameInput);
   }
 
-  @HasRoles('admin')
+  @HasRoles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Mutation(() => Game)
   async updateGame(
     @Param('id') id: string,
     @Args('updateGameInput') updateGameInput: UpdateGameInput,
   ): Promise<Game> {
-    console.log(id);
     return this.gamesService.updategame(id, updateGameInput);
   }
 
-  @HasRoles('admin')
+  @HasRoles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Mutation(() => Game)
   async deleteGame(@Args('id') id: string): Promise<Game> {

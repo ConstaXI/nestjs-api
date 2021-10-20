@@ -6,6 +6,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
+import { UserRole } from './entities/user.interface';
 import { User } from './entities/users.entity';
 import { UsersService } from './users.service';
 
@@ -30,7 +31,7 @@ export class UsersResolver {
     return await this.usersService.createUser(createUserInput);
   }
 
-  @HasRoles('admin')
+  @HasRoles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Mutation(() => User)
   async createAdmin(

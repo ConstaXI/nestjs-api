@@ -7,6 +7,7 @@ import { User } from 'src/users/entities/users.entity';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UseGuards } from '@nestjs/common';
 import { GamesService } from 'src/games/games.service';
+import { verifyNumbers } from './dto/verify-numbers';
 
 @Resolver()
 export class BetsResolver {
@@ -24,6 +25,8 @@ export class BetsResolver {
     const { gameId } = createBetInput;
 
     const game = await this.gamesService.findOne(gameId);
+
+    verifyNumbers(createBetInput.numbers, game);
 
     return await this.betsService.createBet(user, game, createBetInput);
   }

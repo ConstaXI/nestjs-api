@@ -7,8 +7,10 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm';
 
+@Unique(['numbers', 'userId', 'gameId'])
 @Entity()
 @ObjectType()
 export class Bet extends BaseEntity {

@@ -2,6 +2,7 @@ import { Param, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { HasRoles } from 'src/auth/decorators/has-roles';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { CreateGameInput } from './dto/create-game.input';
 import { UpdateGameInput } from './dto/update-game.input';
 import { Game } from './entities/game.entity';
@@ -17,7 +18,7 @@ export class GamesResolver {
   }
 
   @HasRoles('admin')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Mutation(() => Game)
   async createGame(
     @Args('createGameInput') createGameInput: CreateGameInput,
@@ -26,7 +27,7 @@ export class GamesResolver {
   }
 
   @HasRoles('admin')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Mutation(() => Game)
   async updateGame(
     @Param('id') id: string,
@@ -37,7 +38,7 @@ export class GamesResolver {
   }
 
   @HasRoles('admin')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Mutation(() => Game)
   async deleteGame(@Args('id') id: string): Promise<Game> {
     return await this.gamesService.deleteGame(id);

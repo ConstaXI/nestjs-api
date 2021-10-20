@@ -3,6 +3,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CurrentUser } from 'src/auth/decorators/get-current-user';
 import { HasRoles } from 'src/auth/decorators/has-roles';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/users.entity';
@@ -30,7 +31,7 @@ export class UsersResolver {
   }
 
   @HasRoles('admin')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Mutation(() => User)
   async createAdmin(
     @Args('createUserInput') createUserInput: CreateUserInput,

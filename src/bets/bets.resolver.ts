@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { BetsService } from './bets.service';
 import { CreateBetInput } from './dto/create-bet.input';
 import { Bet } from './entities/bet.entity';
@@ -26,5 +26,11 @@ export class BetsResolver {
     const game = await this.gamesService.findOne(gameId);
 
     return await this.betsService.createBet(user, game, createBetInput);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Query(() => [Bet])
+  async getBets(@CurrentUser() user: User): Promise<Bet[]> {
+    return await this.betsService.findByUser(user);
   }
 }

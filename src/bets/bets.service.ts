@@ -23,4 +23,8 @@ export class BetsService {
 
     return bet.save();
   }
+
+  findByUser(user: User): Promise<Bet[]> {
+    return this.betsRepository.find({ where: { userId: user.id } });
+  }
 }

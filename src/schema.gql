@@ -44,6 +44,7 @@ type Query {
   protected: User!
   isAdmin: User!
   getGames: [Game!]!
+  getBets: [Bet!]!
 }
 
 type Mutation {

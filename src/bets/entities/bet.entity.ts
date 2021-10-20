@@ -17,7 +17,7 @@ export class Bet extends BaseEntity {
   id: string;
 
   @Field(() => [Int])
-  @Column({ type: 'varchar' })
+  @Column('int', { array: true })
   numbers: number[];
 
   @Column()
